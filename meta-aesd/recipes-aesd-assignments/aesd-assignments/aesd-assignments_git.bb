@@ -4,11 +4,11 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 # TODO: Set this  with the path to your assignments rep.  Use ssh protocol and see lecture notes
 # about how to setup ssh-agent for passwordless access
-#SRC_URI = "git@github.com:cu-ecen-aeld/assignment-6-JustOxy666.git;protocol=ssh;branch=master"
+SRC_URI = "git://git@github.com/cu-ecen-aeld/assignments-3-and-later-JustOxy666.git;protocol=ssh;branch=master"
 
 PV = "1.0+git${SRCPV}"
 # TODO: set to reference a specific commit hash in your assignment repo
-#SRCREV = ""
+SRCREV = "753e1fdb5581c05370fe5e247673ee48f9339f3d"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
@@ -22,6 +22,13 @@ FILES:${PN} += "${bindir}/aesdsocket"
 # TODO: customize these as necessary for any libraries you need for your application
 # (and remove comment)
 TARGET_LDFLAGS += "-pthread -lpthread -lrt"
+
+# Startup
+inherit update-rc.d
+
+# Refrence class which handles install scripts
+INITSCRIPT_PACKAGES = "${PN}"
+INITSCRIPT_NAME:${PN} = "aesdsocket-start-stop.sh"
 
 do_configure () {
 	:
@@ -39,4 +46,9 @@ do_install () {
 	# and
 	# https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-S
 	# See example at https://github.com/cu-ecen-aeld/ecen5013-yocto/blob/ecen5013-hello-world/meta-ecen5013/recipes-ecen5013/ecen5013-hello-world/ecen5013-hello-world_git.bb
+
+	install -d ${D}${bindir}
+	install -d ${D}${sysconfdir}/init.d
+	install -m 0755 ${S}/aesdsocket ${D}${bindir}/	
+	install -m 0755 ${S}/aesdsocket-start-stop.sh ${D}${sysconfdir}/init.d
 }
