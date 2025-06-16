@@ -1,0 +1,26 @@
+From e3a0340dbe4446f1d725cf6868f8aecec0383949 Mon Sep 17 00:00:00 2001
+From: JustOxy <mihhail.kononov@gmail.com>
+Date: Mon, 16 Jun 2025 15:37:57 +0000
+Subject: [PATCH] Only using misc-modules
+
+---
+ Makefile | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 7b08c49..def86f1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,8 +1,5 @@
+ 
+-SUBDIRS =  misc-progs misc-modules \
+-           skull scull scullc scullp lddbus sculld scullv shortprint simple tty \
+-	   pci usb\
+-	   sbull snull short
++SUBDIRS = misc-modules
+ 
+ all: subdirs
+ 
+-- 
+2.34.1
+

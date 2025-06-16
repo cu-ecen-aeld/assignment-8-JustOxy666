@@ -1,0 +1,20 @@
+#! /bin/sh
+
+
+case "$1" in
+start)
+echo "Starting init script for misc-modules Loading"
+start-stop-daemon -S -n init -a /bin/misc-modules_load -- hello
+start-stop-daemon -S -n init -a /bin/misc-modules_load -- faulty
+;;
+stop)
+echo "Removing user misc-modules"
+start-stop-daemon -K -n misc-modules_load
+start-stop-daemon -S -n init -a /bin/misc-modules_unload -- hello
+start-stop-daemon -S -n init -a /bin/misc-modules_unload -- faulty
+;;
+*)
+echo "Usage: $0 {start|stop}"
+exit 1
+esac
+exit 0
